@@ -1,0 +1,10 @@
+<div *ngIf="sites$ | async as sites;else noSites">
+  <ul *ngFor="let site of sites">
+    <li>{{site.name}}</li>
+  </ul>
+</div>
+
+<ng-template #noSites>
+  <hr>
+  <h5>There are no Sites to list!</h5>
+</ng-template>
