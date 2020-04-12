@@ -8,6 +8,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { SiteserviceService} from './services/siteservice.service';
 import { AppComponent } from './app.component';
 import { SitelistComponent } from './components/sitelist/sitelist.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { SitelistComponent } from './components/sitelist/sitelist.component';
   imports: [
     BrowserModule,
     AngularFireModule.initializeApp(environment.firebase),
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule
   ],
   providers: [
     SiteserviceService
