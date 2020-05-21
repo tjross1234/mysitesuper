@@ -1,7 +1,7 @@
 <div *ngIf="sites$ | async as sites;else noSites">
-  <ul *ngFor="let site of sites">
-    <li>{{site.name}}</li>
-  </ul>
+  <mat-card (click)="onCardClick(site.siteid)" class="sitecard" *ngFor="let site of sites">
+    {{site.name}}
+  </mat-card>
 </div>
 
 <ng-template #noSites>

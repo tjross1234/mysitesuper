@@ -1,1 +1,28 @@
-<p>sitedetail works!</p>
+<ng-container *ngIf="sitedata | async as site">
+  Site Name: {{site.name}}
+  <br>
+  <br>
+  <ng-container *ngIf="loggedInUserOnSite; else notSignedIn">
+    <button mat-raised-button (click)="removeIndividualFromSite(loggedInUserDocId)">Sign Out of Site</button>
+    <!-- <button (click)="testMe(loggedInUserOnSite)">test</button> -->
+  </ng-container>
+
+  <ng-template #notSignedIn>
+    <span *ngIf="auth.user$ | async as user">
+      <button mat-raised-button (click)="addIndividualToSite(user)">Sign In to Site</button>
+    </span>
+  </ng-template>
+
+
+  <br>
+  <br>
+  Individuals on Site:
+  <ng-container *ngIf="individualsOnSite | async as individuals">
+    <mat-card *ngFor="let individual of individuals">
+      {{individual.name}}
+    </mat-card>
+  </ng-container>
+
+
+</ng-container>
+

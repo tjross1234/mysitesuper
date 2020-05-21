@@ -7,6 +7,7 @@ import { environment } from '../environments/environment';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card'
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -38,7 +39,8 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     AppRoutingModule,
     BrowserAnimationsModule,
     MatToolbarModule,
-    MatButtonModule
+    MatButtonModule,
+    MatCardModule
   ],
   providers: [
     SiteserviceService
