@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument} from '@angular/fire/firestore';
 import { Observable, of} from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, shareReplay, tap } from 'rxjs/operators';
 
 import { Site } from '../models/site';
 
@@ -25,7 +25,8 @@ export class SiteserviceService {
         const siteid = c.payload.doc.id;
         console.log({siteid, ...data});
         return {siteid, ...data};
-      }))
+      })),
+      shareReplay(1)
     );
   }
 
@@ -63,6 +64,20 @@ export class SiteserviceService {
 
   removeIndividualFromSite(siteid: string, docid: string) {
     this.afs.doc<Site>('sites/' + siteid + '/individualsOnSite/' + docid).delete();
+  }
+
+  getIndividualsSiteOrientations(userid: string) {
+    console.log(userid);
+    return this.afs.collection<any>('users/' + userid + '/siteOrientations').snapshotChanges();
+    // return ['one', 'two'];
+  }
+  addSiteIndocToUser(siteid: string, userid: string) {
+    console.log(siteid, userid);
+    const data = {
+      siteid: siteid
+    };
+
+    this.afs.collection('users/' + userid + '/siteOrientations').add(data);
   }
 
 }

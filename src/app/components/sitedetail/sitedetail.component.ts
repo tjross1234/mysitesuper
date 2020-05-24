@@ -22,6 +22,8 @@ export class SitedetailComponent implements OnInit, OnDestroy {
   loggedInUserOnSite = false;
   loggedInUser: Subscription;
   loggedInUserEmail: string;
+  loggedInUserUid: string;
+  loggedInUserOrientations: Observable<any>;
   loggedInUserDocId: string;
   isOnSite = false;
 
@@ -34,7 +36,11 @@ export class SitedetailComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.siteid = this.route.snapshot.paramMap.get('siteid');
-    this.loggedInUser = this.auth.user$.subscribe(user => this.loggedInUserEmail = user.email);
+    this.loggedInUser = this.auth.user$.subscribe(user => {
+      // console.log(user);
+      this.loggedInUserEmail = user.email;
+      this.loggedInUserUid = user.uid;
+    });
     this.sitedata = this.siteservice.getSite(this.siteid);
     this.individualsOnSite = this.siteservice.getIndividualsOnSite(this.siteid).pipe(
       tap(iosList => {
@@ -48,6 +54,8 @@ export class SitedetailComponent implements OnInit, OnDestroy {
         }
       })
     );
+    this.loggedInUserOrientations = this.siteservice.getIndividualsSiteOrientations(this.loggedInUserUid);
+    // this.loggedInUserOrientations.subscribe(o => console.log(o));
   }
 
   ngOnDestroy(): void {
@@ -64,6 +72,7 @@ export class SitedetailComponent implements OnInit, OnDestroy {
 
   testMe(stuff) {
     console.log(stuff);
+    this.siteservice.addSiteIndocToUser(this.siteid, this.loggedInUserUid);
   }
 
 }
